@@ -11,7 +11,7 @@ function App() {
     useEffect(() => {
         const fetchServerIP = async () => {
             try {
-                const response = await fetch('http://localhost:3000/ip');
+                const response = await fetch("http://10.220.191.179:3000/ip");
                 const data = await response.json();
                 const ip = `http://${data.ip}:3000`;
                 setServerIP(ip);
