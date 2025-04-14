@@ -24,7 +24,7 @@ function App() {
         ) {
             return 'http://localhost:3000';
         }
-        return 'https://smart-shipping-backend.onrender.com';
+        return 'https://smart-shipping.onrender.com';
     };
 
     const fetchSessionUrl = async (backendUrl = serverUrl) => {
