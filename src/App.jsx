@@ -14,7 +14,7 @@ function App() {
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                 return 'http://localhost:3000';
             }
-            return 'https://smart-shipping-backend.onrender.com/';
+            return 'https://smart-shipping-backend.onrender.com';
         };
 
         const fetchSessionUrl = async () => {
@@ -24,7 +24,7 @@ function App() {
 
                 const response = await fetch(`${backendUrl}/session-url`, {
                     credentials: 'include',
-                    headers: { 'Content-Type': 'application/json' }
+                    // headers: { 'Content-Type': 'application/json' }
                 });
 
                 if (!response.ok) throw new Error('Erro na resposta do servidor');
