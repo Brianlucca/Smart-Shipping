@@ -14,7 +14,7 @@ function App() {
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                 return 'http://localhost:3000';
             }
-            return 'https://seu-backend-real.onrender.com';
+            return 'https://smart-shipping-backend.onrender.com/';
         };
 
         const fetchSessionUrl = async () => {
