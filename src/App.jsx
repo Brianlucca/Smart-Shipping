@@ -135,8 +135,8 @@ function App() {
                         <h2 className="text-xl font-semibold">Instruções de Conexão</h2>
                     </div>
                     <div className="space-y-4 text-gray-600">
-                        <p>• Ambos os dispositivos devem estar na mesma rede Wi-Fi</p>
                         <p>• O QR Code gerado é único para esta sessão</p>
+                        <p>• Para atualizar a sessão, pressione o icone a cima do QR Code</p>
                         <p>• Arquivos expiram após 10 minutos</p>
                         <p>• Não envie arquivos sensíveis</p>
                         <p>• Site criado para aprendizagem e portfólio</p>
