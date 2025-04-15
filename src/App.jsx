@@ -149,7 +149,7 @@ function App() {
                     <div className="space-y-4 text-gray-600">
                         <p>• Este QR Code é exclusivo para a sessão atual</p>
                         <p>• Para atualizar a sessão, clique no ícone acima do QR Code</p>
-                        <p>• Os arquivos expiram automaticamente após 10 minutos</p>
+                        <p>• Os arquivos expiram automaticamente após 5 minutos</p>
                         <p>• Evite enviar arquivos sensíveis, +18 ou com dados pessoais</p>
                         <p>• Limite de 20 MB para qualquer tipo de arquivo</p>
                         <p>• Este site foi criado com fins educacionais e para portfólio</p>
