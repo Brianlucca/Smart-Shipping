@@ -10,6 +10,8 @@ function App() {
     const [uploadStatus, setUploadStatus] = useState('');
     const [loadingSession, setLoadingSession] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
+    const [fileSizeError, setFileSizeError] = useState('');
+
 
     useEffect(() => {
         const backendUrl = determineBackendUrl();
@@ -48,13 +50,15 @@ function App() {
 
     const handleFileUpload = (e) => {
         e.preventDefault();
-        if (!selectedFile) return;
+        if (!selectedFile || !sessionUrl) return;
 
         const formData = new FormData();
         formData.append('file', selectedFile);
 
+        const sessionId = sessionUrl.split('/').pop();
+
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `${serverUrl}/upload`);
+        xhr.open('POST', `${serverUrl}/upload/${sessionId}`);
         xhr.withCredentials = true;
 
         xhr.upload.addEventListener('progress', (e) => {
@@ -86,6 +90,7 @@ function App() {
         xhr.send(formData);
     };
 
+
     const handleDrag = (e) => {
         e.preventDefault();
         setIsDragging(e.type === 'dragenter' || e.type === 'dragover');
@@ -94,9 +99,17 @@ function App() {
     const handleDropFile = (e) => {
         e.preventDefault();
         setIsDragging(false);
-        setSelectedFile(e.dataTransfer.files[0]);
+        const file = e.dataTransfer.files[0];
+    
+        if (file.size > 20 * 1024 * 1024) {
+            setFileSizeError('O arquivo excede o limite de 20MB');
+            setSelectedFile(null);
+        } else {
+            setFileSizeError('');
+            setSelectedFile(file);
+        }
     };
-
+    
     return (
         <div className="min-h-screen p-8 bg-gray-50 text-gray-900">
             <header className="text-center mb-12">
@@ -106,10 +119,10 @@ function App() {
                 {uploadStatus && (
                     <div
                         className={`p-3 mt-2 rounded-lg ${uploadStatus.includes('Sucesso')
-                                ? 'bg-green-100 text-green-800'
-                                : uploadStatus === 'Enviando...'
-                                    ? 'bg-yellow-100 text-yellow-800'
-                                    : 'bg-red-100 text-red-800'
+                            ? 'bg-green-100 text-green-800'
+                            : uploadStatus === 'Enviando...'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-red-100 text-red-800'
                             }`}
                     >
                         {uploadStatus}
@@ -126,7 +139,6 @@ function App() {
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {/* Instruções */}
                 <section className="bg-white rounded-xl p-6 shadow-lg border border-gray-200">
                     <div className="flex items-center mb-6">
                         <svg className="w-6 h-6 text-blue-600 mr-2" fill="currentColor" viewBox="0 0 24 24">
@@ -135,11 +147,11 @@ function App() {
                         <h2 className="text-xl font-semibold">Instruções de Conexão</h2>
                     </div>
                     <div className="space-y-4 text-gray-600">
-                        <p>• O QR Code gerado é único para esta sessão</p>
-                        <p>• Para atualizar a sessão, pressione o icone a cima do QR Code</p>
-                        <p>• Arquivos expiram após 10 minutos</p>
-                        <p>• Não envie arquivos sensíveis</p>
-                        <p>• Site criado para aprendizagem e portfólio</p>
+                        <p>• Este QR Code é exclusivo para a sessão atual</p>
+                        <p>• Para atualizar a sessão, clique no ícone acima do QR Code</p>
+                        <p>• Os arquivos expiram automaticamente após 10 minutos</p>
+                        <p>• Evite enviar arquivos sensíveis, +18 ou com dados pessoais</p>
+                        <p>• Este site foi criado com fins educacionais e para portfólio</p>
                         <p>
                             • Me siga nas redes:
                             <a
@@ -228,7 +240,16 @@ function App() {
                             type="file"
                             id="fileInput"
                             className="hidden"
-                            onChange={(e) => setSelectedFile(e.target.files[0])}
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                if (file && file.size > 20 * 1024 * 1024) {
+                                    setFileSizeError('O arquivo excede o limite de 20MB');
+                                    setSelectedFile(null);
+                                } else {
+                                    setFileSizeError('');
+                                    setSelectedFile(file);
+                                }
+                            }}
                         />
                         <label
                             htmlFor="fileInput"
@@ -251,7 +272,12 @@ function App() {
                         ) : (
                             'Enviar Arquivo'
                         )}
+
+
                     </button>
+                    {fileSizeError && (
+                        <div className="text-red-600 font-medium mt-2 text-center">{fileSizeError}</div>
+                    )}
 
                 </section>
             </div>
