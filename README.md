@@ -73,13 +73,13 @@ Anyone with the session URL or QR can upload/download files (within 5 minutes).
 
 This project is built for educational and portfolio purposes to demonstrate:
 
-Secure file handling with sessions
+Secure file handling with sessions.
 
-QR code generation
+QR code generation.
 
-Cloudinary integration (via backend)
+Cloudinary integration (via backend).
 
-UX-focused design with React and TailwindCSS
+UX-focused design with React and TailwindCSS.
 
 ### Acknowledgments
 
